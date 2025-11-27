@@ -1,3 +1,4 @@
 **/.terraform
-**/.terraform.tfstate.backup
-**/.out.plan
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/out.plan
