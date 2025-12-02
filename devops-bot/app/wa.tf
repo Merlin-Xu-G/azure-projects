@@ -22,4 +22,13 @@ resource "azurerm_linux_web_app" "wa" {
       docker_registry_password = var.acr_admin_password
     }
   }
+
+  logs {
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb = 35
+      }
+    }
+  }
 }

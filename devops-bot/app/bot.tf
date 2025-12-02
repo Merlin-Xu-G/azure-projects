@@ -8,5 +8,5 @@ resource "azurerm_bot_service_azure_bot" "merlin-bot" {
   sku                     = "F0"
   microsoft_app_type      = "SingleTenant"
   microsoft_app_tenant_id = data.azurerm_client_config.current.tenant_id
-  endpoint = "https://${azurerm_linux_web_app.wa.default_hostname}:3978/api/messages"
+  endpoint = "https://${azurerm_linux_web_app.wa.default_hostname}/api/messages"
 }
