@@ -1,4 +1,5 @@
 .idea
+devTools
 
 # terraform && terragrunt
 **/.terraform

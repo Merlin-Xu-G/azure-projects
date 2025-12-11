@@ -1,0 +1,11 @@
+name: azure-bot-local
+
+services:
+  azure-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "13978:80"
+    container_name: bot-local
+    restart: always

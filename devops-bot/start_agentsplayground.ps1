@@ -1,0 +1,1 @@
+agentsplayground -e "http://localhost:13978/api/messages" -c "emulator" --client-id "your-client-id" --client-secret "your-client-secret" --tenant-id "your-tenant-id"

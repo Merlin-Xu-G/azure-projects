@@ -18,19 +18,23 @@ from microsoft_agents.hosting.core import (
 )
 from microsoft_agents.authentication.msal import MsalConnectionManager
 from microsoft_agents.activity import load_configuration_from_env
+from .ado_client import AdoClient
 
 import logging
 
+# log
 logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG)
 
+# config
 load_dotenv()
-
 agents_sdk_config = load_configuration_from_env(environ)
-
 # debug agents sdk config
-logger.debug(agents_sdk_config)
+logger.debug(f"agents_sdk_config is {agents_sdk_config}")
+logger.debug(f"ADO config:{environ['ADO_URL']} - {environ['ADO_PAT']}")
 
+# app
 STORAGE = MemoryStorage()
 CONNECTION_MANAGER = MsalConnectionManager(**agents_sdk_config)
 ADAPTER = CloudAdapter(connection_manager=CONNECTION_MANAGER)
@@ -41,6 +45,8 @@ AGENT_APP = AgentApplication[TurnState](
     storage=STORAGE, adapter=ADAPTER, authorization=AUTHORIZATION, **agents_sdk_config
 )
 
+# ADO app
+ado_client = AdoClient(environ['ADO_PAT'], environ['ADO_URL'])
 
 @AGENT_APP.conversation_update("membersAdded")
 async def on_members_added(context: TurnContext, _state: TurnState):
@@ -58,7 +64,9 @@ async def on_hello(context: TurnContext, _state: TurnState):
 
 @AGENT_APP.activity("message")
 async def on_message(context: TurnContext, _state: TurnState):
-    await context.send_activity(f"you said: {context.activity.text}")
+    # await context.send_activity(f"you said: {context.activity.text}")
+    response = ado_client.build()
+    await context.send_activity(f"{response}")
 
 
 @AGENT_APP.error

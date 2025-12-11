@@ -1,0 +1,1 @@
+agentsplayground -e "http://localhost:3978/api/messages" -c "msteams" --client-id $env:ARM_CLIENT_ID --client-secret $env:ARM_CLIENT_SECRET --tenant-id $env:ARM_TENANT_ID
